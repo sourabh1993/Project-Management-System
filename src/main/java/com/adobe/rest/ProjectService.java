@@ -26,7 +26,13 @@ public class ProjectService {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Project> getProjects() {
-		return projectDao.listProjects();
+		try {
+			return projectDao.listProjects();
+		} catch (FetchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@POST
@@ -47,7 +53,7 @@ public class ProjectService {
 	public Response assignManager(@PathParam("pid") int projId, @PathParam("mgrid") int mgrId){
 		try {
 			projectDao.assignProjectManager(projId, mgrId);
-		} catch (FetchException e) {
+		} catch (PersistenceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -58,7 +64,12 @@ public class ProjectService {
 	@Path("{pid}/employee/{empid}")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response addEmployee(@PathParam("pid") int projId, @PathParam("empid") int empId){
-		projectDao.addEmployee(projId, empId);
+		try {
+			projectDao.addEmployee(projId, empId);
+		} catch (PersistenceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().entity("Employee Added").build();
 	}
 }

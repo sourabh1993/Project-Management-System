@@ -7,6 +7,7 @@ import org.glassfish.jersey.message.filtering.SelectableEntityFilteringFeature;
 
 import com.adobe.dao.EmployeeDao;
 import com.adobe.dao.FetchException;
+import com.adobe.dao.PersistenceException;
 import com.adobe.dao.ProjectDao;
 import com.adobe.entity.Employee;
 import com.adobe.entity.Project;
@@ -23,7 +24,7 @@ public class ProjectDaoMemImpl implements ProjectDao{
 	}
 
 	@Override
-	public void assignProjectManager(int projId, int mgrId) throws FetchException {
+	public void assignProjectManager(int projId, int mgrId) throws PersistenceException {
 		// TODO Auto-generated method stub
 		Project project=null;
 		Employee manager=null;
@@ -37,18 +38,18 @@ public class ProjectDaoMemImpl implements ProjectDao{
 			}
 		}
 		
-		Iterator<Employee> iterator2 = employeeDao.getEmployees().iterator();
-		
-		while(iterator2.hasNext()){
-			Employee employee = iterator2.next();
-			if(employee.getId() == mgrId && employee.getDesignation().equals("Manager")){
-				manager = employee;
-			}
-		}
-		
-		if(manager!=null){
-			project.setManager(manager);
-		}
+//		Iterator<Employee> iterator2 = employeeDao.getEmployees().iterator();
+//		
+//		while(iterator2.hasNext()){
+//			Employee employee = iterator2.next();
+//			if(employee.getId() == mgrId && employee.getDesignation().equals("Manager")){
+//				manager = employee;
+//			}
+//		}
+//		
+//		if(manager!=null){
+//			project.setManager(manager);
+//		}
 	}
 
 	@Override

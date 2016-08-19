@@ -32,7 +32,7 @@ public class EmployeeDaoJdbcImpl implements EmployeeDao {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			throw new PersistenceException("Unable to add product",e);
+			throw new PersistenceException("Unable to add employee",e);
 		}finally {
 			DBUtil.releaseStatement(preparedStatement);
 			DBUtil.releaseConnection(connection);
@@ -43,7 +43,7 @@ public class EmployeeDaoJdbcImpl implements EmployeeDao {
 		List<Employee> employees = new ArrayList<Employee>();
 		Connection connection = null;
 		Statement statement = null;
-		String SQL = "SELECT Id,Name,Designation,Email FROM Employee";
+		String SQL = "SELECT Id,Name,Designation,Email FROM EMPLOYEE";
 		
 		try {
 			connection = DBUtil.getConnection();
@@ -61,7 +61,7 @@ public class EmployeeDaoJdbcImpl implements EmployeeDao {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			throw new FetchException("unable to get products", e);
+			throw new FetchException("unable to get employees", e);
 		}finally {
 			DBUtil.releaseStatement(statement);
 			DBUtil.releaseConnection(connection);
