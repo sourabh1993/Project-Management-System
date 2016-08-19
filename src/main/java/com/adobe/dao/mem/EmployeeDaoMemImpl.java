@@ -16,11 +16,8 @@ public class EmployeeDaoMemImpl implements EmployeeDao {
 		employees.add(employee);
 	}
 	
-	public List<Employee> getEmployee(){
+	public List<Employee> getEmployees(){
 		return employees;
 	}
 	
-	public static List<Employee> getEmployees(){
-		return employees;
-	}
 }

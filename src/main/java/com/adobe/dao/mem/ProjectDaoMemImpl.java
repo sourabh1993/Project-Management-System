@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import org.glassfish.jersey.message.filtering.SelectableEntityFilteringFeature;
 
+import com.adobe.dao.EmployeeDao;
+import com.adobe.dao.FetchException;
 import com.adobe.dao.ProjectDao;
 import com.adobe.entity.Employee;
 import com.adobe.entity.Project;
@@ -12,6 +14,7 @@ import com.adobe.entity.Project;
 public class ProjectDaoMemImpl implements ProjectDao{
 	
 	private static List<Project> projects = new ArrayList<>();
+	private EmployeeDao employeeDao = new EmployeeDaoMemImpl();
 
 	@Override
 	public void addProject(Project project) {
@@ -20,7 +23,7 @@ public class ProjectDaoMemImpl implements ProjectDao{
 	}
 
 	@Override
-	public void assignProjectManager(int projId, int mgrId) {
+	public void assignProjectManager(int projId, int mgrId) throws FetchException {
 		// TODO Auto-generated method stub
 		Project project=null;
 		Employee manager=null;
@@ -34,7 +37,7 @@ public class ProjectDaoMemImpl implements ProjectDao{
 			}
 		}
 		
-		Iterator<Employee> iterator2 = EmployeeDaoMemImpl.getEmployees().iterator();
+		Iterator<Employee> iterator2 = employeeDao.getEmployees().iterator();
 		
 		while(iterator2.hasNext()){
 			Employee employee = iterator2.next();
@@ -63,7 +66,13 @@ public class ProjectDaoMemImpl implements ProjectDao{
 			}
 		}
 		
-		Iterator<Employee> iterator2 = EmployeeDaoMemImpl.getEmployees().iterator();
+		Iterator<Employee> iterator2=null;
+		try {
+			iterator2 = employeeDao.getEmployees().iterator();
+		} catch (FetchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		while(iterator2.hasNext()){
 			Employee employee2 = iterator2.next();

@@ -12,13 +12,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.adobe.dao.FetchException;
+import com.adobe.dao.PersistenceException;
 import com.adobe.dao.ProjectDao;
-import com.adobe.dao.mem.ProjectDaoMemImpl;
+import com.adobe.dao.jdbc.ProjectDaoJdbcImpl;
 import com.adobe.entity.Project;
 
 @Path("/projects")
 public class ProjectService {
-	private ProjectDao projectDao = new ProjectDaoMemImpl();
+	private ProjectDao projectDao = new ProjectDaoJdbcImpl();
 	
 	
 	@GET
@@ -30,7 +32,12 @@ public class ProjectService {
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response addProjects(Project project) {
-		projectDao.addProject(project);
+		try {
+			projectDao.addProject(project);
+		} catch (PersistenceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().entity("Project added").build();
 	}
 	
@@ -38,7 +45,12 @@ public class ProjectService {
 	@Path("{pid}/manager/{mgrid}")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response assignManager(@PathParam("pid") int projId, @PathParam("mgrid") int mgrId){
-		projectDao.assignProjectManager(projId, mgrId);
+		try {
+			projectDao.assignProjectManager(projId, mgrId);
+		} catch (FetchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().entity("Manager Assigned").build();
 	}
 	
